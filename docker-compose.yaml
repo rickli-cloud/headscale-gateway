@@ -1,0 +1,37 @@
+version: "3.9" # legacy
+name: headscale-gateway-example
+
+volumes:
+  headscale-data:
+    name: headscale-data
+  headscale-socket:
+    name: headscale-socket
+  headscale-config:
+    name: headscale-config
+    external: true
+
+services:
+  headscale:
+    image: headscale/headscale:${HEADSCALE_VERSION:-0.23.0-beta1}
+    container_name: headscale
+    restart: always
+    command: serve
+    volumes:
+      - headscale-config:/etc/headscale:ro
+      - headscale-data:/var/lib/headscale:rw
+      - headscale-socket:/var/run/headscale:rw
+
+  headscale-gateway:
+    image: ghcr.io/rickli-cloud/headscale-gateway:${HEADSCALE_GATEWAY_VERSION:-latest}
+    container_name: headscale-gateway
+    restart: always
+    command: serve
+    environment:
+      HSGW_OIDC_ISSUER: https://example.com
+      HSGW_OIDC_CLIENT_ID: abc123
+    volumes:
+      - headscale-socket:/var/run/headscale:ro
+    ports:
+      - 8000:8000
+    depends_on:
+      - headscale
