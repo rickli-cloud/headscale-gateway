@@ -9,5 +9,4 @@ A simple replacement for the Headscale REST API that authenticates users based o
 ## Documentation
 
 - [**Configuration**](https://github.com/rickli-cloud/headscale-gateway/blob/main/docs/configuration.md)
-- [**Deploy**](https://github.com/rickli-cloud/headscale-gateway/blob/main/docs/deploy.md)
 - [**Develop**](https://github.com/rickli-cloud/headscale-gateway/blob/main/docs/develop.md)
